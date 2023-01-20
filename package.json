@@ -1,33 +1,22 @@
 {
+  "name": "vite-project",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.2.1",
-    "@fortawesome/free-brands-svg-icons": "^6.2.1",
-    "@fortawesome/free-regular-svg-icons": "^6.2.1",
-    "@fortawesome/free-solid-svg-icons": "^6.2.1",
-    "@fortawesome/vue-fontawesome": "^3.0.2",
-    "axios": "^1.2.0",
+    "axios": "^1.2.2",
     "firebase": "^9.15.0",
     "pinia": "^2.0.27",
-    "vite": "^3.2.4",
-    "vue": "^3.2.45",
+    "vue": "^3.2.41",
     "vue-router": "^4.0.13"
   },
-  "name": "assign",
-  "description": "��#\u0000 \u0000V\u0000u\u0000e\u0000R\u0000o\u0000u\u0000t\u0000e\u0000r\u0000S\u0000t\u0000o\u0000r\u0000e\u0000P\u0000r\u0000o\u0000j\u0000e\u0000c\u0000t\u0000\r\u0000 \u0000#\u0000 \u0000n\u0000e\u0000w\u0000-\u0000s\u0000t\u0000o\u0000r\u0000e\u0000-\u0000p\u0000r\u0000o\u0000j\u0000e\u0000c\u0000t\u0000\r\u0000 \u0000",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Justin334848491/new-store-project.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Justin334848491/new-store-project/issues"
-  },
-  "homepage": "https://github.com/Justin334848491/new-store-project#readme"
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.2.0",
+    "vite": "^3.2.3"
+  }
 }
