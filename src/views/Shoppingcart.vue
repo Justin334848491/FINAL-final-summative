@@ -1,14 +1,14 @@
 <template>
     <h1> Shopping Cart</h1>
+    <p> Click items you would like to REMOVE</p>
     <input type="button" id="Return2" value="Back to Mainstore" @click="Return4()">
-    <input type="button" id="deletion" value="Remove Item" @click="Deletion()">
     <br> <br>
     <div class="objects">
-        <img id="picture" @click="testFunction(option.position)" v-for="option in movieOptions" :src="option.poster" />
+        <img id="picture" @click="deleteItem(option.id)" v-for="option in movieOptions" :src="option.poster" />
     </div>
 </template>
 
-<script setup>
+<script setup scoped>
 import { storeToRefs } from 'pinia';
 import { indexStore } from "../store/index.js";
 import { ref } from "vue";
@@ -20,11 +20,12 @@ const { shoppingcart } = storeToRefs(index);
 let movieOptions = ref(shoppingcart.value);
 let removeItem = ref("false")
 
-function testFunction(slot) {
-    if (removeItem.value === "true") {
-        index.removeMovieItem(slot);
-        removeItem.value = "false";
-        movieOptions.value = shoppingcart.value
+function deleteItem(pos) {
+    for (let i = 0; i < shoppingcart.value.length; i++) {
+        if (shoppingcart.value[i].id === pos) {
+            shoppingcart.value.splice(i, 1);
+        }
+
     }
 }
 
@@ -38,7 +39,7 @@ function Return4() {
 
 </script>
 
-<style>
+<style scoped>
 .objects {
     display: grid;
     align-self: center;

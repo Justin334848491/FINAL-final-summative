@@ -30,6 +30,10 @@ p {
   font-size: 30px;
 }
 
+#backgroundModal {
+  z-index: 100000000000000;
+}
+
 .modal {
   display: none;
   position: fixed;

@@ -33,7 +33,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup scoped>
 import { storeToRefs } from 'pinia';
 import { indexStore } from "../store/index.js";
 import { ref } from "vue";
@@ -123,7 +123,7 @@ function addItems() {
   index.addItems({
     title: title.value,
     poster: poster.value,
-    position: shoppingcart.value.length,
+    id: movieID.value
   });
 }
 

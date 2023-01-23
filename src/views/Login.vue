@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import router from "../router";
 import Popup from "../components/Popup.vue";
 import { ref } from "vue";
@@ -15,6 +15,8 @@ const password = ref("");
 
 let displayPopup = ref(false)
 
+let showError = ref(false);
+
 function checkLogin() {
   signInWithEmailAndPassword(auth, username.value.value, password.value.value)
     .then((userCredential) => {
@@ -23,6 +25,7 @@ function checkLogin() {
     })
     .catch((error) => {
       showError.value = true;
+      console.log(showError.value);
     });
 }
 function checkGoogleLogin() {
@@ -40,32 +43,6 @@ function checkGoogleLogin() {
       const credential = GoogleAuthProvider.credentialFromError(error);
     });
 }
-
-// function checkLogin() {
-//   signInWithEmailAndPassword(auth, username.value.value, password.value.value)
-//     .then((userCredential) => {
-//       const user = userCredential.user;
-//       router.push("/Mainstore");
-//     })
-//     .catch((error) => {
-//       displayPopup.value = true;
-//     });
-// }
-// function checkGoogleLogin() {
-//   signInWithPopup(auth, provider)
-//     .then((result) => {
-//       const credential = GoogleAuthProvider.credentialFromResult(result);
-//       const token = credential.accessToken;
-//       const user = result.user;
-//       router.push("/Mainstore");
-//     })
-//     .catch((error) => {
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-//       const email = error.customData.email;
-//       const credential = GoogleAuthProvider.credentialFromError(error);
-//     });
-// }
 </script>
 
 <template>
@@ -88,9 +65,8 @@ function checkGoogleLogin() {
   <br />
   <br />
   <img src="https://services.google.com/fh/files/misc/google_g_icon_download.png" @click="checkGoogleLogin()" />
-  <label class="loginLabel">Username:</label>
   <br />
-  <Popup id="Popup" v-if="displayPopup" />
+  <p v-if="showError">There's an error with your login. Please try again</p>
 
 </template>
 
@@ -103,5 +79,9 @@ function checkGoogleLogin() {
   position: relative;
   width: 125px;
   height: 25px;
+}
+
+#Popup {
+  z-index: 1000000;
 }
 </style>
