@@ -1,69 +1,114 @@
-<script setup>
+<script>
+import router from "../router";
+import Popup from "../components/Popup.vue";
 import { ref } from "vue";
-import { auth } from "../firebase/index";
+import { auth } from "../firebase/index.js";
 import {
-  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
-} from "firebase/auth";
+} from "@firebase/auth";
+
+const provider = new GoogleAuthProvider();
 const username = ref("");
-const email = ref("");
-const password1 = ref("");
-const password2 = ref("");
-const registerUserByEmail = async () => {
-  if (password1.value !== password2.value) {
-    console.log("Password issue");
-    return;
-  }
-  try {
-    await createUserWithEmailAndPassword(auth, email.value, password1.value);
-  } catch (error) {
-    console.log(error);
-  }
-};
-const registerUserByGoogle = async () => {
-  const provider = new GoogleAuthProvider();
-  const user = await signInWithPopup(auth, provider);
-  console.log(user);
-};
+const password = ref("");
+
+let displayPopup = ref(false)
+
+function checkLogin() {
+  signInWithEmailAndPassword(auth, username.value.value, password.value.value)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      router.push('/mainstore');
+    })
+    .catch((error) => {
+      showError.value = true;
+    });
+}
+function checkGoogleLogin() {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
+      router.push('/mainstore');
+
+    }).catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.customData.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+    });
+}
+
+// function checkLogin() {
+//   signInWithEmailAndPassword(auth, username.value.value, password.value.value)
+//     .then((userCredential) => {
+//       const user = userCredential.user;
+//       router.push("/Mainstore");
+//     })
+//     .catch((error) => {
+//       displayPopup.value = true;
+//     });
+// }
+// function checkGoogleLogin() {
+//   signInWithPopup(auth, provider)
+//     .then((result) => {
+//       const credential = GoogleAuthProvider.credentialFromResult(result);
+//       const token = credential.accessToken;
+//       const user = result.user;
+//       router.push("/Mainstore");
+//     })
+//     .catch((error) => {
+//       const errorCode = error.code;
+//       const errorMessage = error.message;
+//       const email = error.customData.email;
+//       const credential = GoogleAuthProvider.credentialFromError(error);
+//     });
+// }
 </script>
 
 <template>
-  <div>
-    <h1>Login</h1>
-    <h2>Register by Google</h2>
-    <button @click="registerUserByGoogle">Google</button>
-    <h2>Register by email</h2>
-    <form @submit.prevent="registerUserByEmail()">
-      <input v-model="username" type="text" placeholder="username" /> <br>
-      <input v-model="email" type="email" placeholder="email" /> <br>
-      <input v-model="password1" type="password" placeholder="password" /> <br>
-      <input v-model="password2" type="password" placeholder="re-enter password" /> <br>
-      <input type="submit" value="Register" />
-    </form>
-  </div>
+  <div id="backgroundImage"></div>
+  <h1>The Endless Galaxy Movie Store</h1>
+  <form @submit.prevent="checkLogin()" id="loginContainer">
+    <label class="loginLabel">Username:</label>
+    <br />
+    <input type="email" ref="username" placeholder="Email" class="userInput" />
+    <br />
+    <label class="loginLabel">Password:</label>
+    <br />
+    <input type="password" ref="password" placeholder="Password" class="userInput" />
+    <br />
+    <input type="submit" value="Login" @click="checkLogin()" id="LoginButton" />
+    <br />
+  </form>
+  <br />
+  <input id="LoginButton" type="button" value="MainMenu" @click="mainPage()" />
+  <br />
+  <br />
+  <img src="https://services.google.com/fh/files/misc/google_g_icon_download.png" @click="checkGoogleLogin()" />
+  <label class="loginLabel">Username:</label>
+  <br />
+  <Popup id="Popup" v-if="displayPopup" />
+
 </template>
 
-<style>
-#Return {
-    position: relative;
-    width: 125px;
-    height: 25px;
+<style scoped>
+.loginLabel {
+  font-size: 20px;
 }
 
-#Signin {
-    position: sticky;
-    left: 50.25vw;
-    width: 125px;
-    height: 25px;
+#LoginButton {
+  position: relative;
+  width: 125px;
+  height: 25px;
 }
 
-div {
-    text-align: center;
+#Popup {
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+  height: 60px;
 }
-
-body {
-    color: white;
-    background-image: url("https://wallpapercave.com/wp/agLijth.jpg");
-}
-</style>
+</style>        

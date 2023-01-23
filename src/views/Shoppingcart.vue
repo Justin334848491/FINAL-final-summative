@@ -4,7 +4,6 @@
     <input type="button" id="deletion" value="Remove Item" @click="Deletion()">
     <br> <br>
     <div class="objects">
-
         <img id="picture" @click="testFunction(option.position)" v-for="option in movieOptions" :src="option.poster" />
     </div>
 </template>
@@ -17,15 +16,14 @@ import router from '../router';
 
 const index = indexStore()
 const { shoppingcart } = storeToRefs(index);
+
 let movieOptions = ref(shoppingcart.value);
 let removeItem = ref("false")
 
 function testFunction(slot) {
-    console.log(slot)
     if (removeItem.value === "true") {
         index.removeMovieItem(slot);
         removeItem.value = "false";
-        console.log(shoppingcart.value);
         movieOptions.value = shoppingcart.value
     }
 }
@@ -36,10 +34,6 @@ function Deletion() {
 
 function Return4() {
     router.push("/Mainstore");
-}
-
-function test() {
-    console.log(movieOptions.value)
 }
 
 </script>

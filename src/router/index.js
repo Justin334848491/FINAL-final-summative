@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import MainMenu from "../views/MainMenu.vue";
-import PlayerStats from "../views/Login.vue";
-import Popup from "../views/Popup.vue";
+import PlayerStats from "../views/Register.vue";
+import Popup from "../components/Popup.vue";
 import Mainstore from "../views/Mainstore.vue";
 import Shoppingcart from "../views/Shoppingcart.vue";
+import Login from "../views/Login.vue";
 
 const routes = [
   {
@@ -12,14 +13,9 @@ const routes = [
     component: MainMenu,
   },
   {
-    path: "/login",
-    name: "Login",
+    path: "/Register",
+    name: "Register",
     component: PlayerStats,
-  },
-  {
-    path: "/Popup",
-    name: "Popup",
-    component: Popup,
   },
   {
     path: "/Mainstore",
@@ -30,6 +26,11 @@ const routes = [
     path: "/Shoppingcart",
     name: "Shoppingcart",
     component: Shoppingcart,
+  },
+  {
+    path: "/Login",
+    name: "Login",
+    component: Login,
   },
 ];
 
