@@ -104,11 +104,4 @@ function checkGoogleLogin() {
   width: 125px;
   height: 25px;
 }
-
-#Popup {
-  position: absolute;
-  bottom: 15px;
-  right: 20px;
-  height: 60px;
-}
-</style>        
+</style>
